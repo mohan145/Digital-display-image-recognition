@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="refresh" content="13">
+<title>Status</title>
+
+<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+</head>
+<style>
+	table,th,td {
+	  border : 5px solid grey;
+	  border-radius: 7px;
+	  border-collapse: collapse;
+	}
+	th,td {
+	  padding: 5px;
+	}
+
+	body{
+	background : white;
+	background-image: url('./bgimg.jpg');
+	}
+	
+	#frm{
+		background:white;
+		border:solid grey 10px;
+		border-radius: 50px;
+		width:20%;
+		padding:52px;
+		margin:152px auto;
+		background-image: url('./back1.jpg');
+	}
+</style>
+
+<script>
+
+function loadXMLDoc() {
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      myFunction(this);
+    }
+  };
+  xmlhttp.open("GET", "AC_Temp.xml", true);
+  xmlhttp.send();
+}
+function myFunction(xml) {
+  var i;
+  var xmlDoc = xml.responseXML;
+  var table="<tr><th><font color=white>TIME</font></th><th><font color=white>TEMP</font></th></tr>";
+  var x = xmlDoc.getElementsByTagName("Readings"); 
+  table += "<tr><td><b><font color=white>" +
+    x[0].getElementsByTagName("Time")[0].childNodes[0].nodeValue +
+    "</font></b></td><td><center><b><font size=5 color=red>" +
+    x[0].getElementsByTagName("Temp")[0].childNodes[0].nodeValue +
+    "&deg;C</font></b></center></td></tr>";
+  document.getElementById("demo").innerHTML = table;
+}
+</script>
+<body onload="loadXMLDoc()">
+
+<p>
+<div id="frm">
+	<table id="demo">
+	</table>
+</div>
+</p>
+
+
+
+</body>
+</html>
